@@ -12,52 +12,44 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  // Converte o nickname em um formato compatível com o Supabase Auth
-  const formatEmail = (nick: string) => `${nick.trim().toLowerCase()}@wiki.internal`
+  // Converte o nickname em um formato sintético de e-mail aceito pelo Supabase
+  const formatEmail = (nick: string) => `${nick.trim().toLowerCase()}@fandom.internal`
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
     setLoading(true)
 
-    const internalEmail = formatEmail(username)
+    const cleanUsername = username.trim()
+    const internalEmail = formatEmail(cleanUsername)
 
     if (isSignUp) {
-      // 1. Criar usuário no Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      // 1. Criar usuário no Supabase Auth passando o username nos metadados
+      const { data, error: authError } = await supabase.auth.signUp({
         email: internalEmail,
         password,
+        options: {
+          data: {
+            username: cleanUsername, // A Trigger do SQL usará este valor para criar o perfil público
+          },
+        },
       })
 
       if (authError) {
-        setError(authError.message.includes('already registered') 
-          ? 'Este nickname já está em uso.' 
-          : authError.message)
+        setError(
+          authError.message.includes('already registered') || authError.message.includes('unique')
+            ? 'Este nickname já está em uso.'
+            : authError.message
+        )
         setLoading(false)
         return
       }
 
-      // 2. Criar registro na tabela profiles
-      if (authData.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert({
-            id: authData.user.id,
-            username: username.trim(),
-            role: 'user', // Por padrão todo novo usuário é 'user'
-          })
-
-        if (profileError) {
-          setError('Erro ao criar perfil de usuário.')
-          setLoading(false)
-          return
-        }
-      }
-
+      // Se o usuário foi criado com sucesso, a Trigger cuidou da tabela 'profiles'
       router.push('/')
       router.refresh()
     } else {
-      // Login com Nickname e Senha
+      // 2. Login com Nickname (E-mail sintético) e Senha
       const { error: loginError } = await supabase.auth.signInWithPassword({
         email: internalEmail,
         password,
@@ -127,7 +119,10 @@ export default function LoginPage() {
 
         <div className="mt-6 text-center">
           <button
-            onClick={() => setIsSignUp(!isSignUp)}
+            onClick={() => {
+              setIsSignUp(!isSignUp)
+              setError(null)
+            }}
             className="text-xs text-slate-400 hover:text-indigo-400"
           >
             {isSignUp

@@ -1,35 +1,35 @@
 import Link from 'next/link'
 
 // Exemplo de dados mockados (no futuro virão do Supabase)
-const FEATURED_FANDOMS = [
-  {
-    id: '1',
-    name: 'Lumirep & O Universo Antigo',
-    slug: 'lumirep',
-    description: 'Explore a geografia, as linhagens de dragões, vilas e segredos da província.',
-    category: 'Fantasia',
-    articleCount: 42,
-    bannerUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=600',
-  },
-  {
-    id: '2',
-    name: 'Sci-Fi Cyberpunk',
-    slug: 'cyberpunk-chronicles',
-    description: 'Corporações, tecnologias proibidas e a história da metrópole neon.',
-    category: 'Ficção Científica',
-    articleCount: 18,
-    bannerUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&q=80&w=600',
-  },
-  {
-    id: '3',
-    name: 'Sistemas de RPG & Lore',
-    slug: 'rpg-lore',
-    description: 'Guias de regras, fichas de monstros, feitiços e itens mágicos.',
-    category: 'Jogos',
-    articleCount: 29,
-    bannerUrl: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=600',
-  },
-]
+// const FEATURED_FANDOMS = [
+//   {
+//     id: '1',
+//     name: 'Lumirep & O Universo Antigo',
+//     slug: 'lumirep',
+//     description: 'Explore a geografia, as linhagens de dragões, vilas e segredos da província.',
+//     category: 'Fantasia',
+//     articleCount: 42,
+//     bannerUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=600',
+//   },
+//   {
+//     id: '2',
+//     name: 'Sci-Fi Cyberpunk',
+//     slug: 'cyberpunk-chronicles',
+//     description: 'Corporações, tecnologias proibidas e a história da metrópole neon.',
+//     category: 'Ficção Científica',
+//     articleCount: 18,
+//     bannerUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&q=80&w=600',
+//   },
+//   {
+//     id: '3',
+//     name: 'Sistemas de RPG & Lore',
+//     slug: 'rpg-lore',
+//     description: 'Guias de regras, fichas de monstros, feitiços e itens mágicos.',
+//     category: 'Jogos',
+//     articleCount: 29,
+//     bannerUrl: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=600',
+//   },
+// ]
 
 export default function Home() {
   return (
@@ -76,7 +76,7 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURED_FANDOMS.map((fandom) => (
+          {/* {FEATURED_FANDOMS.map((fandom) => (
             <Link
               key={fandom.id}
               href={`/fandoms/${fandom.slug}`}
@@ -102,8 +102,16 @@ export default function Home() {
                 </p>
               </div>
             </Link>
-          ))}
+          ))} */}
         </div>
+
+
+
+
+
+        <section>
+          
+        </section>
       </main>
     </div>
   )
